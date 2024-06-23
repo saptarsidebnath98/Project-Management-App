@@ -10,10 +10,19 @@ function App() {
   });
 
   function handleStratAddProject(){
-    setProjectState(prevState=>{
+    setProjectState((prevState)=>{
       return{
         ...prevState,
         seletedProjectId : null,
+      };
+    });
+  }
+
+  function handleCancelAddProject(){
+    setProjectState((prevState)=>{
+      return{
+        ...prevState,
+        seletedProjectId : undefined,
       };
     });
   }
@@ -37,7 +46,7 @@ function App() {
   let content;
 
   if(projectState.seletedProjectId === null){
-    content = <NewProject onAdd={handleAddProject}/>
+    content = <NewProject onAdd={handleAddProject} onCancel={handleCancelAddProject}/>
   }else if(projectState.seletedProjectId === undefined){
     content = <NoProjectSelected onStartAddProject={handleStratAddProject}/>
   }
