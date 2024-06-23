@@ -4,13 +4,13 @@ import NewProject from "./components/NewProject.jsx";
 import NoProjectSelected from "./components/NoProjectSelected.jsx";
 
 function App() {
-  const [projectState, setProjectSelected] = useState({
+  const [projectState, setProjectState] = useState({
     seletedProjectId: undefined,
     projects: []
   });
 
   function handleStratAddProject(){
-    setProjectSelected(prevState=>{
+    setProjectState(prevState=>{
       return{
         ...prevState,
         seletedProjectId : null,
@@ -18,13 +18,30 @@ function App() {
     });
   }
 
+  function handleAddProject(projectData){
+    setProjectState(prevState => {
+      const newProject = {
+          ...projectData,
+          id: Math.random()
+      };
+
+      return{
+        ...prevState,
+        projects: [...prevState.projects, newProject]
+      };
+    });
+  }
+
+  console.log(projectState);
+
   let content;
 
   if(projectState.seletedProjectId === null){
-    content = <NewProject/>
+    content = <NewProject onAdd={handleAddProject}/>
   }else if(projectState.seletedProjectId === undefined){
     content = <NoProjectSelected onStartAddProject={handleStratAddProject}/>
   }
+
 
   return (
     <main className="h-screen my-8 flex gap-8">
